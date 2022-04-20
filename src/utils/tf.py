@@ -4,9 +4,9 @@ import tensorflow as tf
 def get_devices_tf():
     physical_devices = tf.config.list_physical_devices()
     print('Detected physical devices: {}'.format(physical_devices))
-    cpus = [phy.name for phy in physical_devices if phy.device_type == 'CPU']
+    cpus = [phy for phy in physical_devices if phy.device_type == 'CPU']
     print('Detected CPUs: {}'.format(cpus))
-    gpus = [phy.name for phy in physical_devices if phy.device_type == 'GPU']
+    gpus = [phy for phy in physical_devices if phy.device_type == 'GPU']
     print('Detected GPUs: {}'.format(gpus))
     return gpus
 
@@ -16,7 +16,7 @@ def check_gpus_usage_tf(gpus):
         raise ValueError('Found empty list of CUDA devices...')
     else:
         for i, gpu in enumerate(gpus):
-            gpu_name = gpu.replace('physical_device', 'device')
+            gpu_name = gpu.name.replace('physical_device', 'device')
             details = tf.config.experimental.get_device_details(gpu)
             device_name = details.get('device_name', 'Unknown GPU')
             with tf.device(gpu_name):
