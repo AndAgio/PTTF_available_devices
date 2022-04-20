@@ -132,3 +132,4 @@ dmypy.json
 .idea
 slurm*
 *.swp
+pttf_env
