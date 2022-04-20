@@ -17,7 +17,8 @@ def check_gpus_usage_tf(gpus):
         raise ValueError('Found empty list of CUDA devices...')
     else:
         for gpu in gpus:
-            with tf.device(gpu):
+            gpu_name = gpu.replace('physical_device', 'device')
+            with tf.device(gpu_name):
                 try:
                     tf.zeros((100, 100), dtype=tf.dtypes.float32)
                     print('Device {} is ok'.format(gpu))
