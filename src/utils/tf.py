@@ -15,17 +15,21 @@ def check_gpus_usage_tf(gpus):
     if len(gpus) == 0:
         raise ValueError('Found empty list of CUDA devices...')
     else:
-        for gpu in gpus:
+        for i, gpu in enumerate(gpus):
             gpu_name = gpu.replace('physical_device', 'device')
+            details = tf.config.experimental.get_device_details(gpu)
+            device_name = details.get('device_name', 'Unknown GPU')
             with tf.device(gpu_name):
                 try:
                     tf.zeros((2, 2), dtype=tf.dtypes.float32)
-                    print('Device {} is ok'.format(gpu))
+                    print('Device {} is ok'.format(device_name))
                 except:
-                    print('Device {} didn\'t pass initialization test!!!'.format(gpu))
+                    print('Device {} didn\'t pass initialization test!!!'.format(device_name))
 
 
 def main():
+    import os
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
     print('\n=========================================================')
     print('======================= TENSORFLOW ======================')
     print('=========================================================')
