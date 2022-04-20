@@ -20,7 +20,7 @@ def check_gpus_usage_tf(gpus):
             gpu_name = gpu.replace('physical_device', 'device')
             with tf.device(gpu_name):
                 try:
-                    tf.zeros((100, 100), dtype=tf.dtypes.float32)
+                    tf.zeros((2, 2), dtype=tf.dtypes.float32)
                     print('Device {} is ok'.format(gpu))
                 except:
                     print('Device {} didn\'t pass initialization test!!!'.format(gpu))
@@ -39,11 +39,11 @@ def check_gpus_usage_torch(gpus):
         for i, _ in enumerate(gpus):
             with torch.cuda.device(i):
                 try:
-                    torch.zeros((100, 100), dtype=torch.float32, device='cuda')
+                    torch.zeros((2, 2), dtype=torch.float32, device='cuda')
                     print('Device {} is ok'.format(torch.cuda.get_device_name(i)))
                 except:
                     print('Device {} didn\'t pass initialization test!!!'.format(torch.cuda.get_device_name(i)))
-                torch.zeros((100, 100), dtype=torch.float32, device='cuda')
+                torch.zeros((2, 2), dtype=torch.float32, device='cuda')
 
 
 def main():
