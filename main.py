@@ -36,13 +36,14 @@ def check_gpus_usage_torch(gpus):
     if len(gpus) == 0:
         raise ValueError('Found empty list of CUDA devices...')
     else:
-        for i, gpu in enumerate(gpus):
-            try:
-                torch.zeros((100, 100), dtype=torch.float32, device=torch.cuda.device(i))
-                print('Device {} is ok'.format(torch.cuda.get_device_name(i)))
-            except:
-                print('Device {} didn\'t pass initialization test!!!'.format(torch.cuda.get_device_name(i)))
-            torch.zeros((100, 100), dtype=torch.float32, device=torch.cuda.device(i))
+        for i, _ in enumerate(gpus):
+            with torch.cuda.device(i):
+                try:
+                    torch.zeros((100, 100), dtype=torch.float32, device='cuda')
+                    print('Device {} is ok'.format(torch.cuda.get_device_name(i)))
+                except:
+                    print('Device {} didn\'t pass initialization test!!!'.format(torch.cuda.get_device_name(i)))
+                torch.zeros((100, 100), dtype=torch.float32, device='cuda')
 
 
 def main():
