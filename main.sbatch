@@ -9,4 +9,5 @@
 
 source /public/andrea.agiollo/venvs/pttf/bin/activate
 
-python3 main.py
+python3 src/utils/tf.py
+python3 src/utils/pt.py
